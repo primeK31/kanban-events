@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 import { CreateEventDto } from './dtos/CreateEvent.dot';
 import EventModel, { IEvent } from './models/Event';
 import { Event } from './types/response';
+import UserModel, {IUser} from '../auth/models/User';
+import { User } from '../auth/types/response';
 
 
-
-// this event service instance shows how to create a event, get a event by id, and get all events with in-memory data
 class EventService {
   
     async getEventById(id: string): Promise<IEvent | null> {
@@ -30,6 +30,10 @@ class EventService {
       return newEvent;
     }
   
+    async getEventsByAuthUserCity(id: string): Promise<IEvent[]>{
+      const user:any = await UserModel.findById(id);
+      return await EventModel.find({location: user.city});
+    }
     
   }
   

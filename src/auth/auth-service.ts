@@ -9,14 +9,15 @@ import RefreshTokenModel from './models/RefreshToken';
 dotenv.config();
 
 class AuthService {
-  private readonly jwtSecret = process.env.JWT_SECRET!;
-  private readonly jwtRefreshSecret = process.env.JWT_REFRESH_SECRET!;
+  private readonly jwtSecret = "secretkey";
+  private readonly jwtRefreshSecret = "secretkey";
 
   async registerUser(createUserDto: CreateUserDto): Promise<IUser> {
-    const { email, password, username } = createUserDto;
+    const { email, password, username, city } = createUserDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new UserModel({
+      city,
       email,
       username,
       password: hashedPassword,

@@ -47,6 +47,19 @@ class EventController {
           res.status(500).send({ error: error.message });
         }
       }
+
+
+    getEventsByAuthUser = async(req, res): Promise<void> =>{
+      try {
+        const userid = req.userId;
+        const events = await this.eventService.getEventsByAuthUserCity(userid);
+        res.status(200).json(events);
+      } catch (error: any) {
+        console.log(error);
+        res.status(500).send({error: error.message});
+      }
+    }
+  
 }
 
 export default EventController;
